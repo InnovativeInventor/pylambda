@@ -85,6 +85,11 @@ class UntypedLambda():
         Evaluates the given lambda expression
         """
         # print(expression)
+        if not expression:
+            expression = self.expression
+
+        if isinstance(expression, str):
+            expression = expression.split()
 
         if len(expression) == 1 and expression[0].isalpha():
             return expression[0]

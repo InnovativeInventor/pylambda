@@ -34,6 +34,15 @@ def test_find_paren():
 def test_eval():
     interpreter = pylambda.UntypedLambda(expression = STRING)
     assert interpreter.eval(expression = STRING.split()) == ['λ', 'y', '.', '[', 'λ', 'z.', '[', 'z', ']', ']']
+    assert interpreter.eval(expression = STRING) == ['λ', 'y', '.', '[', 'λ', 'z.', '[', 'z', ']', ']']
+
+def test_eval_1():
+    interpreter = pylambda.UntypedLambda(expression = STRING)
+    assert interpreter.eval() == ['λ', 'y', '.', '[', 'λ', 'z.', '[', 'z', ']', ']']
+
+def test_eval_1():
+    interpreter = pylambda.UntypedLambda()
+    assert interpreter.eval(expression = STRING) == ['λ', 'y', '.', '[', 'λ', 'z.', '[', 'z', ']', ']']
 
 def test_ill_formed_error():
     with pytest.raises(ValueError) as error:
