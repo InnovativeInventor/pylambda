@@ -1,5 +1,6 @@
 import pylambda
 import os
+from collections import OrderedDict
 
 STRING = "λ x . [ x ]  ( λ y . [ λ z. [ z ] ] )"
 FILENAME = "test.lbda"
@@ -25,3 +26,11 @@ def test_expression_str():
 def test_expression_str():
     interpreter = pylambda.UntypedLambda(expression = STRING.split())
     assert interpreter.check() == True
+
+def test_find_paren():
+    interpreter = pylambda.UntypedLambda(expression = STRING)
+
+def test_eval():
+    interpreter = pylambda.UntypedLambda(expression = STRING)
+    assert interpreter.eval(expression = STRING.split()) == ['λ', 'y', '.', '[', 'λ', 'z.', '[', 'z', ']', ']']
+

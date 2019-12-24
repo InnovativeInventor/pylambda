@@ -11,5 +11,5 @@ Pylambda is an effort to create an untyped lambda calculus interpreter in Python
 <expression> := <var> | <expression> ( <expression> ) | λ <var> . [ <expression> }
 ```
 
-NB: Spaces are important.
+NB: Spaces are important. No variable reuse is allowed.
 
