@@ -5,12 +5,12 @@ Status](https://travis-ci.com/InnovativeInventor/pylambda.svg?branch=master)](ht
 Pylambda is an effort to create an untyped lambda calculus interpreter in Python. It recursively evaluates and checks if a statement is well formed.
 
 Features:
-- [ x ] Turing complete
-- [ x ] Evaluates untyped lambda calculus 
-- [ x ] Validates grammar for untyped lambda calculus (doesn't fully validate that a statement is well-formed)
-- [   ] Easy to read `__repr__`
-- [   ] Special encodings ([Church](https://en.wikipedia.org/wiki/Church_encoding))
-- [   ] Simple types
+- [x] Turing complete
+- [x] Evaluates untyped lambda calculus 
+- [x] Validates grammar for untyped lambda calculus (doesn't fully validate that a statement is well-formed)
+- [ ] Easy to read `__repr__`
+- [ ] Special encodings ([Church](https://en.wikipedia.org/wiki/Church_encoding))
+- [ ] Simple types
 
 ## Grammar (in [BNF](https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form) form)
 ```
