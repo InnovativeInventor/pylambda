@@ -1,4 +1,6 @@
 ## Pylambda
+[![Build
+Status](https://travis-ci.com/InnovativeInventor/pylambda.svg?branch=master)](https://travis-ci.com/InnovativeInventor/pylambda) [![codecov](https://codecov.io/gh/InnovativeInventor/pylambda/branch/master/graph/badge.svg)](https://codecov.io/gh/InnovativeInventor/pylambda)
 
 Pylambda is an effort to create an untyped lambda calculus interpreter in Python. It recursively evaluates and checks if a statement is well formed.
 
