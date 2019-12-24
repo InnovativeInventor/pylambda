@@ -1,4 +1,5 @@
 import pylambda
+import pytest
 import os
 from collections import OrderedDict
 
@@ -34,3 +35,22 @@ def test_eval():
     interpreter = pylambda.UntypedLambda(expression = STRING)
     assert interpreter.eval(expression = STRING.split()) == ['λ', 'y', '.', '[', 'λ', 'z.', '[', 'z', ']', ']']
 
+def test_ill_formed_error():
+    with pytest.raises(ValueError) as error:
+        interpreter = pylambda.UntypedLambda(expression = ["a", ")"])
+        interpreter.check()
+
+def test_ill_formed_error_1():
+    with pytest.raises(ValueError) as error:
+        interpreter = pylambda.UntypedLambda(expression = ["]", ")"])
+        interpreter.check()
+
+def test_ill_formed_error_2():
+    with pytest.raises(IndexError) as error:
+        interpreter = pylambda.UntypedLambda()
+        interpreter.eval(expression = ["]", ")"])
+
+def test_ill_formed_error_2():
+    with pytest.raises(IndexError) as error:
+        interpreter = pylambda.UntypedLambda()
+        interpreter.eval(expression = ["λ", "x"])
