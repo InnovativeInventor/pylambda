@@ -6,6 +6,7 @@ Pylambda is an effort to create an untyped lambda calculus interpreter in Python
 
 Features:
 - [x] Turing complete
+- [x] Proper tokenizing (eliminate the need for space-separated expressions)
 - [x] Evaluates untyped lambda calculus 
 - [x] Validates grammar for untyped lambda calculus (doesn't fully validate that a statement is well-formed)
 - [ ] Easy to read `__repr__`

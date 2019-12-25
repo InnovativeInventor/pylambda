@@ -19,14 +19,14 @@ class UntypedLambda():
             if isinstance(expression, list):
                 self.expression = expression
             else:
-                self.expression = expression.split()
+                self.expression = self.tokenize(expression)
 
     def check(self):
         return self.wffchecker(self.expression)
 
     def read(self):
         with open(self.filename, "r") as f:
-            expression = str(f.readline()).split()
+            expression = self.tokenize(f.readline())
         
         # Clean up lambda expression (may not be necessary)
         self.expression = list(filter(None, expression))
@@ -37,21 +37,23 @@ class UntypedLambda():
         This should eventually be made redundant by self.eval
         """
         # parens, parens_list = self.find_parens(expression)
+        try:
+            if len(expression) == 1:
+                return expression[0].isalpha()
+            elif expression[-1] == ")":
+                index = len(expression) - list(reversed(expression)).index("(")
+                expr_1 = expression[:index]
+                expr_2 = expression[index:-1]
+                return self.wffchecker(expr_1) and self.wffchecker(expr_2)
+            elif expression[0] == "λ" and expression[2] == "." and expression[3] == "[":
+                # index = expression.index("]")
+                var = expression[1]
+                # expr = expression[3:index] # not checking rn
+                return self.wffchecker(var)
+        except:
+            pass
 
-        if len(expression) == 1:
-            return expression[0].isalpha()
-        elif expression[-1] == ")":
-            index = len(expression) - list(reversed(expression)).index("(")
-            expr_1 = expression[:index]
-            expr_2 = expression[index:-1]
-            return self.wffchecker(expr_1) and self.wffchecker(expr_2)
-        elif expression[0] == "λ" and expression[2] == "." and expression[3] == "[":
-            # index = expression.index("]")
-            var = expression[1]
-            # expr = expression[3:index] # not checking rn
-            return self.wffchecker(var)
-        else:
-            raise ValueError("Ill-formed lambda expression!")
+        raise ValueError("Ill-formed lambda expression!")
 
     def find_parens(self, expression = None):
         """
@@ -89,7 +91,7 @@ class UntypedLambda():
             expression = self.expression
 
         if isinstance(expression, str):
-            expression = expression.split()
+            expression = self.tokenize(expression)
 
         if len(expression) == 1 and expression[0].isalpha():
             return expression[0]
@@ -128,4 +130,25 @@ class UntypedLambda():
 
         else:
             raise ValueError("Ill-formed lambda expression!", expression)
+    def tokenize(self, expression = None):
+        special_tokens = [")","(","]","[","λ","."]
+        if not expression:
+            expression = self.expression
+
+        if isinstance(expression, list):
+            return expression
+
+        for each_token in special_tokens:
+            expression = expression.replace(each_token, " " + each_token + " ")
+
+        return expression.rstrip().split()
+
+    def repl(self):
+        try:
+            while True:
+                function = input("lbda >")
+                print(self.eval(self.tokenize(function)))
+        except KeyError:
+            print("Exiting . . .!")
+
 
