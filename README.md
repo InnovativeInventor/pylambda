@@ -9,6 +9,7 @@ Features:
 - [x] Proper tokenizing (eliminate the need for space-separated expressions)
 - [x] Evaluates untyped lambda calculus 
 - [x] Validates grammar for untyped lambda calculus (doesn't fully validate that a statement is well-formed)
+- [ ] Consider using PEG grammar rather than BNF (remove context-free grammar) 
 - [ ] Easy to read `__repr__`
 - [ ] Special encodings ([Church](https://en.wikipedia.org/wiki/Church_encoding))
 - [ ] Simple types
@@ -20,7 +21,9 @@ Features:
 <expression> := <var> | <expression> ( <expression> ) | λ <var> . [ <expression> }
 ```
 
-NB: Spaces are important. No variable reuse is allowed.
+NB: No variable reuse is allowed.
+
+In the future, I may choose to move away from a context-free grammar as it may be easier to implement a exact parser (that is, a parser that precisely implements the specified grammar) and may result in more/better deviations from Church's untyped lambda calculus.
 
 ## Example usage
 Evaluating a lambda expression:
