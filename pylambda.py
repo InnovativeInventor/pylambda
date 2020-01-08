@@ -16,7 +16,10 @@ class UntypedLambda():
                 self.expression = expression
             else:
                 self.expression = self.tokenize(expression)
-        self.context = [self.expression]
+
+        if hasattr(self, 'expression'):
+            self.context = [self.expression]
+
         self.functions = []
 
     def __repr__(self):
@@ -160,7 +163,7 @@ class UntypedLambda():
                 if "def " in command:
                     self.functions.append(command)
                 else:
-                    self.eval(self.tokenize(function))
+                    self.eval(self.tokenize(command))
                 print(self)
         except KeyError:
             print("Exiting . . .!")
