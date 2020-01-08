@@ -3,11 +3,7 @@ from collections import OrderedDict
 
 class UntypedLambda():
     """
-    A simple untyped lambda calculus interpreter.
-    This is the BNF form of the grammar that this interpreter expects.
-        <alpha>      := a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z
-        <var>        := <alpha><var> 
-        <expression> := <var> | <expression> ( <expression> ) | λ <var> . [ <expression> }
+    A simple untyped lambda calculus interpreter. More documentation in the README.
     No variable reuse is allowed.
     """
     def __init__(self, filename = None, expression = None):
@@ -30,7 +26,7 @@ class UntypedLambda():
         
         # Clean up lambda expression (may not be necessary)
         self.expression = list(filter(None, expression))
-        print(self.expression) # debug
+        # print(self.expression) # debug
 
     def wffchecker(self, expression: list):
         """
@@ -45,7 +41,7 @@ class UntypedLambda():
                 expr_1 = expression[:index]
                 expr_2 = expression[index:-1]
                 return self.wffchecker(expr_1) and self.wffchecker(expr_2)
-            elif expression[0] == "λ" and expression[2] == "." and expression[3] == "[":
+            elif (expression[0] == "λ" or expression[0] == "\\") and expression[2] == "." and expression[3] == "[":
                 # index = expression.index("]")
                 var = expression[1]
                 # expr = expression[3:index] # not checking rn
@@ -94,11 +90,13 @@ class UntypedLambda():
             expression = self.tokenize(expression)
 
         if len(expression) == 1 and expression[0].isalpha():
-            return expression[0]
+            self.expression = expression[0]
+            self.context.append(self.expression)
+            return self.expression
 
         parens, parens_list = self.find_parens(expression)
 
-        if expression[0] == "λ" and expression[2] == "." and expression[-1] == ")":
+        if (expression[0] == "λ" or expression[0] == "\\") and expression[2] == "." and expression[-1] == ")":
             index_appl = parens[parens_list[-1]]
             index_expr = parens[parens_list[0]]
             appl = expression[parens_list[-1]+1:index_appl]
@@ -126,12 +124,15 @@ class UntypedLambda():
                 # eval_expr = [appl if t == var else t for t in expr]
                 return self.eval(eval_expr)
         elif self.wffchecker(expression):
-            return expression
+            self.expression = expression
+            self.context.append(self.expression)
+            return self.expression
 
         else:
             raise ValueError("Ill-formed lambda expression!", expression)
+
     def tokenize(self, expression = None):
-        special_tokens = [")","(","]","[","λ","."]
+        special_tokens = [")", "(", "]", "[", "λ", ".", "\\"]
         if not expression:
             expression = self.expression
 
