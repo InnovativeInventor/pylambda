@@ -34,3 +34,8 @@ interpreter = pylambda.UntypedLambda()
 interpreter.eval(expression = expression)
 ```
 
+## REPL
+```
+import pylambda
+interpreter = pylambda.UntypedLambda().repl()
+```
