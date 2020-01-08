@@ -33,3 +33,4 @@ expression = "λ x . [ x ]  ( λ y . [ λ z. [ z ] ] )"
 interpreter = pylambda.UntypedLambda()
 interpreter.eval(expression = expression)
 ```
+

@@ -16,6 +16,14 @@ class UntypedLambda():
                 self.expression = expression
             else:
                 self.expression = self.tokenize(expression)
+        self.context = [self.expression]
+        self.functions = []
+
+    def __repr__(self):
+        return str(self.expression)
+
+    def __str__(self):
+        return "".join(self.expression)
 
     def check(self):
         return self.wffchecker(self.expression)
@@ -147,8 +155,13 @@ class UntypedLambda():
     def repl(self):
         try:
             while True:
-                function = input("lbda >")
-                print(self.eval(self.tokenize(function)))
+                # TODO: add more parsing to functions append and eval
+                command = input("lbda > ")
+                if "def " in command:
+                    self.functions.append(command)
+                else:
+                    self.eval(self.tokenize(function))
+                print(self)
         except KeyError:
             print("Exiting . . .!")
 
