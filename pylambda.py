@@ -19,8 +19,10 @@ class UntypedLambda():
 
         if hasattr(self, 'expression'):
             self.context = [self.expression]
+        else:
+            self.context = []
 
-        self.functions = []
+        self.functions = {} 
 
     def __repr__(self):
         return str(self.expression)
@@ -160,10 +162,7 @@ class UntypedLambda():
             while True:
                 # TODO: add more parsing to functions append and eval
                 command = input("lbda > ")
-                if "def " in command:
-                    self.functions.append(command)
-                else:
-                    self.eval(self.tokenize(command))
+                self.eval(self.tokenize(command))
                 print(self)
         except KeyError:
             print("Exiting . . .!")
