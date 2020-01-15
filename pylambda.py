@@ -30,6 +30,21 @@ class UntypedLambda():
     def __str__(self):
         return "".join(self.expression)
 
+    def is_beta(self):
+        """
+        Determines if the lambda expression can be beta-reducible 
+        (this just applies eval() once and compares, no guarantees!) 
+        """
+        if ("λ" or "\\") and self.expression[-1] in ["]", ")"]:
+            before_expr = self.expression
+
+            if len(self.eval(self.expression)) < len(before_expr):
+                self.expression = before_expr
+                return True
+            else:
+                self.expression = before_expr
+                return False
+
     def check(self):
         return self.wffchecker(self.expression)
 
@@ -119,27 +134,37 @@ class UntypedLambda():
                 # print("appl", appl)
 
                 # replaces and *actually* evaluates lambda expression
-                matches = [x in expr for x in var]
+                matches = [x in expr for x in var] # verify
                 eval_expr = []
                 flag = False
-                # print("matches", matches)
                 for count, bool_value in enumerate(matches):
-                    if bool_value:
+                    if bool_value and expr[count] not in self.functions.keys(): # *some* scoping
                         if not flag:
                             eval_expr.extend(appl)
                         flag = True
                     else:
-                        # eval_expr.append(expression[count])
+                        # If it doesn't match
                         eval_expr.append(expr[count])
                         flag = False
 
                 # print(eval_expr)
                 # eval_expr = [appl if t == var else t for t in expr]
                 return self.eval(eval_expr)
+
         elif self.wffchecker(expression):
             self.expression = expression
             self.context.append(self.expression)
             return self.expression
+
+        elif self.expression[0] == "fn":
+            # fn name x . expr
+            self.functions[self.expression[1]] = ["λ"].extend(self.expression[2:])
+            # ["λ"].extend(self.expression[2:] should look like ["λ", "x", ".", <expr>]
+
+        elif self.expression[0] in self.functions.keys():
+            # named func application
+            index_appl = parens[parens_list[0]]
+            self.eval(self.functions[self.expression[0]].extend(["(", self.expression[parens_list[0]:index_appl]]))
 
         else:
             raise ValueError("Ill-formed lambda expression!", expression)
