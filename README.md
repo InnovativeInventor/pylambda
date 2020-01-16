@@ -10,7 +10,7 @@ Features:
 - [x] Evaluates untyped lambda calculus 
 - [x] Validates grammar for untyped lambda calculus (doesn't fully validate that a statement is well-formed)
 - [ ] Consider using PEG grammar rather than BNF (remove context-free grammar) 
-- [ ] Easy to read `__repr__`
+- [x] Easy to read `__repr__`
 - [ ] Special encodings ([Church](https://en.wikipedia.org/wiki/Church_encoding))
 - [ ] Simple types
 
