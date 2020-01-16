@@ -46,6 +46,9 @@ class UntypedLambda():
                 return False
 
     def check(self):
+        """
+        Run self.wffchecker
+        """
         return self.wffchecker(self.expression)
 
     def read(self):
@@ -58,7 +61,7 @@ class UntypedLambda():
 
     def wffchecker(self, expression: list):
         """
-        This should eventually be made redundant by self.eval
+        This should eventually be made redundant by self.eval. This checks if a statement is a well formed formula (i.e. syntactically correct)
         """
         # parens, parens_list = self.find_parens(expression)
         try:
@@ -81,6 +84,7 @@ class UntypedLambda():
 
     def find_parens(self, expression = None):
         """
+        Finds the opening/closing parenthesis in a given lambda expression.
         Modified from https://stackoverflow.com/questions/29991917/indices-of-matching-parentheses-in-python
         """
         parens = OrderedDict() 
@@ -124,6 +128,7 @@ class UntypedLambda():
 
         parens, parens_list = self.find_parens(expression)
 
+        # check if the expression has type function
         if (expression[0] == "λ" or expression[0] == "\\") and expression[2] == "." and expression[-1] == ")":
             index_appl = parens[parens_list[-1]]
             index_expr = parens[parens_list[0]]
@@ -156,11 +161,13 @@ class UntypedLambda():
             self.context.append(self.expression)
             return self.expression
 
+        # check if the expression is a function definition
         elif self.expression[0] == "fn":
             # fn name x . expr
             self.functions[self.expression[1]] = ["λ"].extend(self.expression[2:])
             # ["λ"].extend(self.expression[2:] should look like ["λ", "x", ".", <expr>]
 
+        # apply already defined functions
         elif self.expression[0] in self.functions.keys():
             # named func application
             index_appl = parens[parens_list[0]]
@@ -170,6 +177,9 @@ class UntypedLambda():
             raise ValueError("Ill-formed lambda expression!", expression)
 
     def tokenize(self, expression = None):
+        """
+        Basic tokenization (essentially converts to list)
+        """
         special_tokens = [")", "(", "]", "[", "λ", ".", "\\"]
         if not expression:
             expression = self.expression
@@ -183,6 +193,9 @@ class UntypedLambda():
         return expression.rstrip().split()
 
     def repl(self):
+        """
+        Basic REPL (Read-Evaluate-Print-Loop)
+        """
         try:
             while True:
                 # TODO: add more parsing to functions append and eval
