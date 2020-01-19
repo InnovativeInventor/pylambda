@@ -18,7 +18,7 @@ Features:
 ```
 <alpha>      := a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z 
 <func_mark>  := λ | \
-<var>        := <alpha><var>
+<var>        := <var> | <alpha><var>
 <expression> := <var> | <expression> ( <expression> ) | <func_mark> <var> . [ <expression> ]
 ```
 
