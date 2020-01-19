@@ -34,7 +34,7 @@ interpreter = pylambda.UntypedLambda()
 interpreter.eval(expression = expression)
 ```
 
-## REPL
+## REPL (Read Evaluate Print Loop)
 ```
 import pylambda
 interpreter = pylambda.UntypedLambda().repl()

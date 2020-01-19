@@ -196,11 +196,13 @@ class UntypedLambda():
         """
         Basic REPL (Read-Evaluate-Print-Loop)
         """
+        self.history = []
         try:
             while True:
                 # TODO: add more parsing to functions append and eval
                 command = input("lbda > ")
                 self.eval(self.tokenize(command))
+                self.history.append(command)
                 print(self)
         except KeyError:
             print("Exiting . . .!")
