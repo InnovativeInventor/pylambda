@@ -27,7 +27,14 @@ NB: No variable reuse is allowed.
 In the future, I may choose to move away from a context-free grammar as it may be easier to implement a exact parser (that is, a parser that precisely implements the specified grammar) and may result in more/better deviations from Church's untyped lambda calculus.
 
 ## Example usage
-Evaluating a lambda expression:
+From REPL (Read Evaluate Print Loop)
+```
+lbda > λ x . [ x ]  ( λ y . [ λ z. [ z ] ] )
+λy.[λz.[z]]
+lbda >
+```
+
+Evaluating from python library:
 ```python
 expression = "λ x . [ x ]  ( λ y . [ λ z. [ z ] ] )"
 interpreter = pylambda.UntypedLambda()
